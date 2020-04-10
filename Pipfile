@@ -1,0 +1,15 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pylint = "*"
+flake8 = "*"
+
+[packages]
+django = "==3.0.5"
+psycopg2 = ">=2.5.4"
+
+[requires]
+python_version = "3.6"
