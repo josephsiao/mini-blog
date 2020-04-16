@@ -1,10 +1,13 @@
-<body>
-    <div>
-        <div class="row">
-            <div class="col-md-8">
-            {% block content %}
-            {% endblock %}
-            </div>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+    <head>
+        {% comment %} <link rel="stylesheet" href="style.css"> {% endcomment %}
+        <title>{% block title %}Mini Blog{% endblock %}</title>
+    </head>
+
+    <body>
+        <div id="content">
+            {% block content %}{% endblock %}
         </div>
-    </div>
-</body>
+    </body>
+</html>
