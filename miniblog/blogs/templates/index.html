@@ -9,6 +9,16 @@
         <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
     {% endif %}
 
-    <p>{{ current_time }}</p>
-
+    <p>目前共有 {{ article_list | length }} 篇文章</p>
+    {% for article in article_list %}
+        </br>
+        <h3>
+            <a href="{% url 'article_post' article.id %}"/>
+                {{ article.title | title}}
+            </a>
+        </h3>
+        <div>{{ article.content | truncatechars:30}}</div>
+    {% empty %}
+        <p>沒有任何文章可以顯示</p>
+    {% endfor %}
 {% endblock %}

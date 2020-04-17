@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>標題：{{ post.title | title }}</h3>
+    <p>內容：{{ post.content }}</p>
+    <p>作者：{{ post.author }}</p>
+    <p>發布時間：{{ post.published_time }}</p>
+    <p>上次修改時間：{{ post.last_updated_time }}</p>
+    <p>分類：{{ post.article_type }}</p>
+    <p>標籤：
+        <div>
+            {% for tags in post_tags %}
+                {% for _, value in tags.items %}
+                    {{ value }}
+                {% endfor %}
+            {% empty %}
+                <p>No tags</p>
+            {% endfor %}
+        </div>
+    </p>
+{% endblock %}
