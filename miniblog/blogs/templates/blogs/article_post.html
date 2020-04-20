@@ -10,9 +10,7 @@
     <p>標籤：
         <div>
             {% for tags in post_tags %}
-                {% for _, value in tags.items %}
-                    {{ value }}
-                {% endfor %}
+                {{ tags.article_tags__tag_name }}
             {% empty %}
                 <p>No tags</p>
             {% endfor %}

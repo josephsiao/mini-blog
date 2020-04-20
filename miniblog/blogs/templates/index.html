@@ -1,22 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        <p>HI! {{ user }}</p>
-        <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
-    {% else %}
-        <p>Please login to see this page.</p>
-        <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
-    {% endif %}
-
-    <p>目前共有 {{ article_list | length }} 篇文章</p>
+    <h1>目前共有 {{ article_list | length }} 篇文章</h1>
     {% for article in article_list %}
         </br>
-        <h3>
+        <h5>
             <a href="{% url 'article_post' article.id %}"/>
                 {{ article.title | title}}
             </a>
-        </h3>
+        </h5>
         <div>{{ article.content | truncatechars:30}}</div>
     {% empty %}
         <p>沒有任何文章可以顯示</p>
