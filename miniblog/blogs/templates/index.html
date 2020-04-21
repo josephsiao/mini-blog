@@ -1,16 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>目前共有 {{ article_list | length }} 篇文章</h1>
-    {% for article in article_list %}
-        </br>
-        <h5>
-            <a href="{% url 'article_post' article.id %}"/>
-                {{ article.title | title}}
-            </a>
-        </h5>
-        <div>{{ article.content | truncatechars:30}}</div>
-    {% empty %}
-        <p>沒有任何文章可以顯示</p>
-    {% endfor %}
+    {% comment %} <h1>目前共有 {{ article_list | length }} 篇文章</h1> {% endcomment %}
+    <div class="container">
+        <div>
+            {% for article in article_list %}
+                <div class="container" style="padding-top: 20px; max-width: 50rem;">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ article.title | truncatechars:30 | title }}</h5>
+                            <p class="card-text">{{ article.content | truncatechars:50 }}</p>
+                            <div class="text-right">
+                                <a href="{% url 'article_post' article.id %}" class="btn btn-primary">繼續閱讀</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p style="padding-top: 20px;">沒有任何文章可以顯示</p>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
