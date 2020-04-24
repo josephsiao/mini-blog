@@ -1,16 +1,17 @@
 from django.contrib.auth.models import User
 from django.db import models
+from ckeditor.fields import RichTextField
 
 
 class ArticleType(models.Model):
-    type_name = models.CharField(max_length=15)
+    type_name = models.CharField(unique=True, max_length=15)
 
     def __str__(self):
         return self.type_name
 
 
 class ArticleTag(models.Model):
-    tag_name = models.CharField(max_length=30)
+    tag_name = models.CharField(unique=True, max_length=30)
 
     def __str__(self):
         return self.tag_name
@@ -19,7 +20,7 @@ class ArticleTag(models.Model):
 class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
-    content = models.TextField()
+    content = RichTextField()
     published_time = models.DateTimeField(auto_now_add=True)
     last_updated_time = models.DateTimeField(auto_now=True)
     article_type = models.ForeignKey(
