@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <div>
+            <div class="container" style="padding-top: 20px;">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            【
+                                <a href="{% url 'find_by_type' article.article_type %}" class="text-decoration-none">
+                                    {{ article.article_type }}
+                                </a>
+                            】
+                            {{ article.title | title }}
+                        </h5>
+                        <span class="" style="font-size: 14px; color: #666666;">
+                            作者：
+                            <a href="{% url 'find_by_author' article.author %}" class="text-decoration-none">{{ article.author }}</a>
+                            ｜
+                            發表於：{{ article.published_time }}
+                            ｜
+                            最後修改於：{{ article.last_updated_time }}
+                            ｜
+                            {% if user.is_authenticated and user == article.author %}
+                                <a href="{% url 'edit_post' article.id %}" class="text-decoration-none badge badge-warning">
+                                    EDIT
+                                </a>
+                                <a href="{% url 'delete_post' article.id %}" class="text-decoration-none badge badge-danger">
+                                    DELETE
+                                </a>
+                            {% endif %}
+                        </span>
+                        <hr>
+                        <p class="card-text">{{ article.content | safe }}</p>
+                        <hr>
+                        <p>
+                            {% for tag in article_tags %}
+                                <a href="{% url 'find_by_tag' tag %}" class="text-decoration-none badge badge-info">{{ tag }}</a>
+                            {% empty %}
+                                <p>No tags</p>
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

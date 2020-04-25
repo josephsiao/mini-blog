@@ -10,7 +10,7 @@ class UserRegistrationForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'placeholder': 'Enter account',
+                'placeholder': 'Enter account'
             }
         )
     )
@@ -50,6 +50,7 @@ class UserLoginForm(forms.Form):
             attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter account',
+                'autofocus': 'autofocus'
             }
         )
     )

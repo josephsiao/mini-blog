@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container" style="padding-top: 20px;">
         <h3 class="text-left">New Post</h3>
-        <form method="POST" action="">
+        <form method="POST" action="{% url 'update_post' %}">
             {% csrf_token %}
             {{ form.media }}
             {% for field in form %}
@@ -14,16 +14,28 @@
                 </div>
             {% endfor %}
             <div class="form-group">
-                <label for="id_article_type" class="label">Article type</label>
+                <label for="id_article_type" class="label">類別</label>
                 <select name="article_type" required id="id_article_type" class="form-control js-example-tags" style="width:100%">
-                    <option>其它</option>
+                    {% if article.article_type %}
+                        <option selected="selected">{{ article.article_type }}</option>
+                    {% else %}
+                        <option selected="selected">其它</option>
+                    {% endif %}
                 </select>
             </div>
             <div class="form-group">
-                <label for="id_article_tags" class="label">Article tags</label>
+                <label for="id_article_tags" class="label">標籤</label>
                 <select name="article_tags" required id="id_article_tags" class="form-control js-example-tokenizer" style="width:100%" multiple="multiple">
+                    {% if article_tags %}
+                        {% for tag in article_tags %}
+                            <option selected="selected">{{ tag }}</option>
+                        {% endfor %}
+                    {% endif %}
                 </select>
             </div>
+            {% if article.id %}
+                <input type="hidden" name="edit_id" value={{ article.id }}>
+            {% endif %}
             <input type="submit" class="btn btn-primary" value="Submit">
         </form>
     </div>
