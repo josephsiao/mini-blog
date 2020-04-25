@@ -9,8 +9,10 @@ from .models import Article, ArticleTag, ArticleType
 
 
 def index(request):
+    article_list = Article.objects.order_by('-published_time').all()
+
     context = {
-        'article_list': Article.objects.order_by('-published_time').values()
+        'article_list': article_list
     }
 
     return render(request, 'index.html', context)

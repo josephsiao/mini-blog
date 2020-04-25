@@ -8,17 +8,17 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title | title }}</h5>
                         <p>作者：
-                            <a href="{% url 'find_by_author' post.author %}" class="">{{ post.author }}</a>
+                            <a href="{% url 'find_by_author' post.author %}" class="text-decoration-none">{{ post.author }}</a>
                         </p>
                         <p>發布時間：{{ post.published_time }}</p>
                         <p>上次修改時間：{{ post.last_updated_time }}</p>
                         <p>分類：
-                            <a href="{% url 'find_by_type' post.article_type %}" class="">{{ post.article_type }}</a>
+                            <a href="{% url 'find_by_type' post.article_type %}" class="text-decoration-none">{{ post.article_type }}</a>
                         </p>
                         <p class="card-text">{{ post.content | safe }}</p>
                         <p>標籤：
                             {% for tags in post_tags %}
-                                <a href="{% url 'find_by_tag' tags.article_tags__tag_name %}" class="">{{ tags.article_tags__tag_name }}</a>
+                                <a href="{% url 'find_by_tag' tags.article_tags__tag_name %}" class="text-decoration-none">{{ tags.article_tags__tag_name }}</a>
                             {% empty %}
                                 <p>No tags</p>
                             {% endfor %}

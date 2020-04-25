@@ -130,6 +130,12 @@ LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/'
 
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': None,
+    },
+}
+
 # Which HTML tags are allowed
 BLEACH_ALLOWED_TAGS = []
 

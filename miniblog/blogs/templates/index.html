@@ -8,7 +8,23 @@
                 <div class="container" style="padding-top: 20px; max-width: 50rem;">
                     <div class="card bg-light">
                         <div class="card-body">
-                            <h5 class="card-title">{{ article.title | truncatechars:30 | title }}</h5>
+                            <h5 class="card-title">
+                                【
+                                    <a href="{% url 'find_by_type' article.article_type %}" class="text-decoration-none">
+                                        {{ article.article_type }}
+                                    </a>
+                                】
+                                <a href="{% url 'article_post' article.id %}" class="text-decoration-none" style="color: #000000;">
+                                    {{ article.title | truncatechars:30 | title }}
+                                </a>
+                            </h5>
+                            <span class="" style="font-size: 12px; color: #666666;">Author：
+                                <a href="{% url 'find_by_author' article.author %}" class="text-decoration-none">
+                                    {{ article.author }}
+                                </a>
+                                ｜
+                                發表於：{{ article.published_time }}
+                            </span>
                             <p class="card-text">
                                 {{ article.content | truncatechars:50 | bleach }}
                             </p>
