@@ -1,17 +1,48 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .form import ArticlePostForm
 from .models import Article, ArticleTag, ArticleType
 
+ARTICLES_PER_PAGE = 3
+
+
+def handle_pagination(request, obj):
+    paginator = Paginator(obj, ARTICLES_PER_PAGE)
+    page_number = int(request.GET.get('page', 1))
+    page_obj = paginator.get_page(page_number)
+
+    article_list = page_obj.object_list
+
+    current_page_range = list(range(max(1, page_number - 2), page_number))
+    current_page_range.extend(list(range(page_number, min(page_obj.paginator.num_pages, page_number + 2) + 1)))
+
+    if len(current_page_range) < ARTICLES_PER_PAGE:
+        if current_page_range[0] != 1:
+            current_page_range.insert(0, '...')
+        if current_page_range[-1] != page_obj.paginator.num_pages:
+            current_page_range.append('...')
+    else:
+        if current_page_range[0] - 1 >= 1:
+            current_page_range.insert(0, '...')
+        if current_page_range[-1] + 1 <= page_obj.paginator.num_pages:
+            current_page_range.append('...')
+
+    context = {
+        'article_list': article_list,
+        'page_obj': page_obj,
+        'current_page_range': current_page_range
+    }
+
+    return context
+
 
 def index(request):
     article_list = Article.objects.order_by('-published_time').all()
 
-    context = {
-        'article_list': article_list
-    }
+    context = handle_pagination(request, article_list)
 
     return render(request, 'blog/index.html', context)
 
@@ -31,9 +62,7 @@ def get_post_detail(request, article_id):
 def find_by_author(request, author_name):
     article_list = User.objects.filter(username=author_name).first().article_set.all().order_by('-published_time')
 
-    context = {
-        'article_list': article_list
-    }
+    context = handle_pagination(request, article_list)
 
     return render(request, 'blog/index.html', context)
 
@@ -41,9 +70,7 @@ def find_by_author(request, author_name):
 def find_by_type(request, type_name):
     article_list = ArticleType.objects.filter(type_name=type_name).first().articles.all().order_by('-published_time')
 
-    context = {
-        'article_list': article_list
-    }
+    context = handle_pagination(request, article_list)
 
     return render(request, 'blog/index.html', context)
 
@@ -51,9 +78,7 @@ def find_by_type(request, type_name):
 def find_by_tag(request, tag_name):
     article_list = ArticleTag.objects.filter(tag_name=tag_name).first().articles.all().order_by('-published_time')
 
-    context = {
-        'article_list': article_list
-    }
+    context = handle_pagination(request, article_list)
 
     return render(request, 'blog/index.html', context)
 

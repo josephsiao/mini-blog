@@ -6,6 +6,7 @@ verify_ssl = true
 [dev-packages]
 pylint = "*"
 flake8 = "*"
+pylint-django = "*"
 
 [packages]
 django = "==3.0.5"

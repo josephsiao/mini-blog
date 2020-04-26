@@ -21,8 +21,8 @@
                             發表於：{{ article.published_time }}
                             ｜
                             最後修改於：{{ article.last_updated_time }}
-                            ｜
                             {% if user.is_authenticated and user == article.author %}
+                                ｜
                                 <a href="{% url 'edit_post' article.id %}" class="text-decoration-none badge badge-warning">
                                     EDIT
                                 </a>
