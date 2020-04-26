@@ -13,7 +13,7 @@ def index(request):
         'article_list': article_list
     }
 
-    return render(request, 'index.html', context)
+    return render(request, 'blog/index.html', context)
 
 
 def get_post_detail(request, article_id):
@@ -35,7 +35,7 @@ def find_by_author(request, author_name):
         'article_list': article_list
     }
 
-    return render(request, 'index.html', context)
+    return render(request, 'blog/index.html', context)
 
 
 def find_by_type(request, type_name):
@@ -45,7 +45,7 @@ def find_by_type(request, type_name):
         'article_list': article_list
     }
 
-    return render(request, 'index.html', context)
+    return render(request, 'blog/index.html', context)
 
 
 def find_by_tag(request, tag_name):
@@ -55,7 +55,27 @@ def find_by_tag(request, tag_name):
         'article_list': article_list
     }
 
-    return render(request, 'index.html', context)
+    return render(request, 'blog/index.html', context)
+
+
+def get_all_types(request):
+    type_list = ArticleType.objects.all()
+
+    context = {
+        'type_list': type_list
+    }
+
+    return render(request, 'blog/index.html', context)
+
+
+def get_all_tags(request):
+    tag_list = ArticleTag.objects.all()
+
+    context = {
+        'tag_list': tag_list
+    }
+
+    return render(request, 'blog/index.html', context)
 
 
 @login_required
@@ -81,7 +101,7 @@ def update_post(request):
 
         article.article_tags.set(article_tags)
 
-        return redirect('/')
+        return redirect('blog')
     else:
         form = ArticlePostForm()
 
@@ -100,7 +120,7 @@ def delete_post(request, article_id):
         if article.author == request.user:
             article.delete()
 
-    return redirect('/')
+    return redirect('blog')
 
 
 @login_required
@@ -123,4 +143,4 @@ def edit_post(request, article_id):
 
             return render(request, 'blog/edit_post.html', context)
 
-    return redirect('/')
+    return redirect('blog')

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load bleach_tags %}
+
+{% block content %}
+    <div class="container">
+        {% if article_list %}
+            <div>
+                {% for article in article_list %}
+                    <div class="container" style="padding-top: 20px; max-width: 50rem;">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    【
+                                        <a href="{% url 'find_by_type' article.article_type %}" class="text-decoration-none">
+                                            {{ article.article_type }}
+                                        </a>
+                                    】
+                                    <a href="{% url 'get_post_detail' article.id %}" class="text-decoration-none" style="color: #000000;">
+                                        {{ article.title | truncatechars:30 | title }}
+                                    </a>
+                                </h5>
+                                <span class="" style="font-size: 12px; color: #666666;">
+                                    作者：
+                                    <a href="{% url 'find_by_author' article.author %}" class="text-decoration-none">
+                                        {{ article.author }}
+                                    </a>
+                                    ｜
+                                    發表於：{{ article.published_time }}
+                                </span>
+                                <p class="card-text">
+                                    {{ article.content | truncatechars:50 | bleach }}
+                                </p>
+                                <div class="text-right">
+                                    <a href="{% url 'get_post_detail' article.id %}" class="btn btn-primary">繼續閱讀</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div>
+                {% if type_list %}
+                    <div style="padding-top: 20px;">
+                        <div class="card bg-light">
+                            <div class="card-body h3 d-inline-block">
+                                <p>
+                                    {% for type in type_list %}
+                                        <a href="{% url 'find_by_type' type %}" class="text-decoration-none badge badge-info mr-2 mb-2">{{ type }}</a>
+                                    {% endfor %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% elif tag_list %}
+                    <div style="padding-top: 20px;">
+                        <div class="card bg-light">
+                            <div class="card-body h3 d-inline-block">
+                                <span>
+                                    {% for tag in tag_list %}
+                                        <a href="{% url 'find_by_tag' tag %}" class="text-decoration-none badge badge-info mr-2 mb-2">{{ tag }}</a>
+                                    {% endfor %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p>沒有任何文章可以顯示</p>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

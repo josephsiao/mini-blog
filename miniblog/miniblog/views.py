@@ -4,6 +4,10 @@ from django.shortcuts import redirect, render
 from .form import UserLoginForm, UserRegistrationForm
 
 
+def index(request):
+    return render(request, 'home/index.html')
+
+
 def user_register(request):
     if request.user.is_authenticated:
         return redirect('/')
