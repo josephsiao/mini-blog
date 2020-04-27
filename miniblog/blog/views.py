@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
@@ -144,6 +145,8 @@ def update_post(request):
 
         article.article_tags.set(article_tags)
 
+        messages.success(request, '文章發表成功')
+
         return redirect('blog')
     else:
         form = ArticlePostForm()
@@ -162,6 +165,8 @@ def delete_post(request, article_id):
 
         if article.author == request.user:
             article.delete()
+
+    messages.success(request, '文章刪除成功')
 
     return redirect('blog')
 

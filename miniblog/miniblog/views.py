@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
 
@@ -10,6 +11,8 @@ def index(request):
 
 def user_register(request):
     if request.user.is_authenticated:
+        messages.info(request, '你已註冊且登入中')
+
         return redirect('/')
 
     redirect_to = request.GET.get('next', '')
@@ -19,12 +22,16 @@ def user_register(request):
 
         if form.is_valid():
             form.save()
+
+            messages.success(request, '註冊成功')
+
             return redirect(redirect_to) if redirect_to else redirect('/')
         else:
             context = {
                 'form': form,
                 'next': redirect_to
             }
+
             return render(request, 'registration/register.html', context)
     else:
         form = UserRegistrationForm()
@@ -39,6 +46,8 @@ def user_register(request):
 
 def user_login(request):
     if request.user.is_authenticated:
+        messages.info(request, '你已登入')
+
         return redirect('/')
 
     redirect_to = request.GET.get('next', '')
@@ -50,6 +59,8 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+
+            messages.success(request, '你已成功登入')
 
             return redirect(redirect_to) if redirect_to else redirect('/')
 
@@ -66,5 +77,7 @@ def user_login(request):
 def user_logout(request):
     redirect_to = request.GET.get('next', '')
     logout(request)
+
+    messages.success(request, '你已成功登出')
 
     return redirect(redirect_to) if redirect_to else redirect('/')
