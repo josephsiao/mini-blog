@@ -104,7 +104,12 @@
                         </div>
                     </div>
                 {% else %}
-                    <p>沒有任何文章可以顯示</p>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>沒有任何文章</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                 {% endif %}
             </div>
         {% endif %}
