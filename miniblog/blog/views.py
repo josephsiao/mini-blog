@@ -1,12 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .form import ArticlePostForm
 from .models import Article, ArticleTag, ArticleType
 
-ARTICLES_PER_PAGE = 3
+ARTICLES_PER_PAGE = 10
 
 
 def handle_pagination(request, obj):
@@ -77,6 +78,23 @@ def find_by_type(request, type_name):
 
 def find_by_tag(request, tag_name):
     article_list = ArticleTag.objects.filter(tag_name=tag_name).first().articles.all().order_by('-published_time')
+
+    context = handle_pagination(request, article_list)
+
+    return render(request, 'blog/index.html', context)
+
+
+def find_by_keyword(request):
+    keyword = request.GET['keyword']
+
+    article_list = Article.objects.filter(
+        Q(title__icontains=keyword) |
+        Q(content__icontains=keyword) |
+        Q(article_type__type_name__icontains=keyword) |
+        Q(article_tags__tag_name__icontains=keyword)
+    ).order_by('-published_time')
+
+    article_list = article_list.distinct()
 
     context = handle_pagination(request, article_list)
 
