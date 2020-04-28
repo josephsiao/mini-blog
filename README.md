@@ -1,5 +1,9 @@
 # mini-blog
 
+## Live Demo
+
+- [Heroku APP](https://mini-blog-tw.herokuapp.com/)
+
 ## Usage
 
 安裝 [python 3.6](https://www.python.org/downloads/windows/) 與 `pipenv` 套件
