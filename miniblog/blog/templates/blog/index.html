@@ -83,11 +83,11 @@
                     <div style="padding-top: 20px;">
                         <div class="card bg-light">
                             <div class="card-body h3 d-inline-block">
-                                <p>
+                                <span>
                                     {% for type in type_list %}
                                         <a href="{% url 'find_by_type' type %}" class="text-decoration-none badge badge-info mr-2 mb-2">{{ type }}</a>
                                     {% endfor %}
-                                </p>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                     </div>
                 {% else %}
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <strong>沒有任何文章</strong>
+                        <strong>沒有東西喔</strong>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

@@ -43,19 +43,9 @@ $ python manage.py createsuperuser
 
 處理靜態檔案
 
-先將 `settings.py` 裡的 `STATICFILES_DIRS` 註解(#)
-
-```
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
-```
-
-接著
-
 ```
 $ python manage.py collectstatic
 ```
-
-再把 `settings.py` 裡的 `STATICFILES_DIRS` 的註解(#)拿掉
 
 開啟伺服器
 
