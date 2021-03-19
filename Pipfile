@@ -9,7 +9,7 @@ flake8 = "*"
 pylint-django = "*"
 
 [packages]
-django = "==3.0.7"
+django = "==3.1.6"
 django-ckeditor = "*"
 django-bleach = "*"
 
